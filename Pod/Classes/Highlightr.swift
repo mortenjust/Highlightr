@@ -48,6 +48,7 @@ open class Highlightr
      - returns: Highlightr instance.
      */
     public init?(highlightPath: String? = nil)
+  
     {
         let jsContext = JSContext()!
         let window = JSValue(newObjectIn: jsContext)
@@ -61,6 +62,7 @@ open class Highlightr
         self.bundle = bundle
         guard let hgPath = highlightPath ?? bundle.path(forResource: "highlight.min", ofType: "js") else
         {
+            print("no highlight js")
             return nil
         }
         
@@ -68,6 +70,7 @@ open class Highlightr
         let value = jsContext.evaluateScript(hgJs)
         if value?.toBool() != true
         {
+            print("2. No eval")
             return nil
         }
         guard let hljs = window?.objectForKeyedSubscript("hljs") else
@@ -78,6 +81,7 @@ open class Highlightr
         
         guard setTheme(to: "pojoaque") else
         {
+            print("3. no pojanque")
             return nil
         }
         
@@ -93,15 +97,33 @@ open class Highlightr
     @discardableResult
     open func setTheme(to name: String) -> Bool
     {
-        guard let defTheme = bundle.path(forResource: name+".min", ofType: "css") else
-        {
-            return false
+        let name = "\(name).min"
+        let type = "css"
+        
+        var url : URL?
+        
+        // first look in main bundle
+        if let theme = Bundle.main.url(forResource: name, withExtension: type) {
+            url = theme
+            print("\(name) found in main bundle")
         }
-        let themeString = try! String.init(contentsOfFile: defTheme)
-        theme =  Theme(themeString: themeString)
+        
+        // then look in bundle (the package)
+        if let defTheme = bundle.url(forResource: name, withExtension: type) {
+            url = defTheme
+            print("\(name) found in package")
+        }
 
         
-        return true
+        if let url = url {
+            let themeString = try! String(contentsOf: url)
+            print("set", themeString)
+            theme = Theme(themeString: themeString)
+            return true
+        } else {
+            print("\(name) found nowhere")
+            return false
+        }
     }
     
     /**
