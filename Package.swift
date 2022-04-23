@@ -22,7 +22,7 @@ let package = Package(
             path: "Pod",
             exclude: [
                 "Assets/Highlighter/LICENSE",
-            ],
+            ], 
             sources: [
                 "Classes",
             ],
