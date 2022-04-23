@@ -4,6 +4,8 @@ Changes in this fork
 - `addTheme` now also looks for .min.css in the main bundle
 - Added an xcode dark css
 
+Release notes
+- 0.2.1 Fixed blue params
 
 [![Version](https://img.shields.io/cocoapods/v/Highlightr.svg?style=flat)](http://cocoapods.org/pods/Highlightr)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
