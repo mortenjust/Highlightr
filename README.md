@@ -31,7 +31,7 @@ Takes your lame string with code and returns a NSAttributtedString with proper s
 $ gem install cocoapods
 ```
 
-To integrate Highlightr into your Xcode project using CocoaPods, specify it in your `Podfile`:
+To integrate Highlightr in your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```ruby
 source 'https://github.com/CocoaPods/Specs.git'
